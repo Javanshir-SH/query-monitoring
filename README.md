@@ -57,4 +57,5 @@ Docker compose runs Postgres Redis and application containers
 - As logger used famous [zap](https://github.com/uber-go/zap)
 - As ORM used [gorm](https://github.com/go-gorm/gorm)
 - As http web framework used [fiber](https://github.com/gofiber/fiber)
+- For caching used Redis and [redis go client](https://github.com/go-redis/redis)
 
