@@ -1,0 +1,184 @@
+openapi: 3.0.0
+info:
+  title: pg query-monitoring
+  description: api for monitor queries based on their executain time
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /queries:
+    get:
+      tags:
+        - query-monitoring
+      summary: "Get queries execution information"
+      parameters:
+        - $ref: "#/components/parameters/QueryType"
+        - $ref: "#/components/parameters/PerPage"
+        - $ref: "#/components/parameters/PageNumber"
+        - $ref: "#/components/parameters/Sort"
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page: { type: integer }
+                  per_page: { type: integer }
+                  page_count: { type: integer }
+                  total_count: { type: integer }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Query' }
+                example:
+
+                  page: 5
+                  per_page: 10
+                  page_count: 8
+                  total_count: 78
+                  data:
+                    - id: 46
+                      statement: "select * from users"
+                      max_exec_time: 1s
+                      mean_exec_time: 789ms
+        400: { $ref: '#/components/responses/BadRequest' }
+        500: { $ref: '#/components/responses/InternalServerError'}
+  /todos:
+    post:
+      tags:
+        - todo
+      summary: "Create todo item"
+      responses:
+        '201':
+          description: todo item created
+        400: { $ref: '#/components/responses/BadRequest' }
+        500: { $ref: '#/components/responses/InternalServerError'}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+    put:
+      tags:
+        - todo
+      summary: "Update todo item"
+      responses:
+        '201':
+          description: todo item updated
+        400: { $ref: '#/components/responses/BadRequest' }
+        500: { $ref: '#/components/responses/InternalServerError'}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+
+  /todos/{id}:
+    get:
+      tags:
+        - todo
+      summary: "Get todo item"
+      parameters:
+        - $ref: "#/components/parameters/TodoId"
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Task'
+                example:
+                  id: 1
+                  title: "first task"
+        400: { $ref: '#/components/responses/BadRequest' }
+        500: { $ref: '#/components/responses/InternalServerError'}
+    delete:
+      tags:
+        - todo
+      summary: "Delete todo item"
+      parameters:
+        - $ref: "#/components/parameters/TodoId"
+      responses:
+        '200':
+          description: todo item deleted
+
+        400: { $ref: '#/components/responses/BadRequest' }
+        500: { $ref: '#/components/responses/InternalServerError'}
+
+
+components:
+  parameters:
+    QueryType:
+      description: database query statement type
+      name: type
+      in: query
+      required: false
+      schema: { type: string, enum: [ "select","update","insert","delete" ], example: "select"}
+    PerPage:
+      description: record size per page
+      name: per_page
+      in: query
+      required: false
+      schema: { type: integer, example: 10}
+    PageNumber:
+      description: requested page number
+      name: page
+      in: query
+      required: false
+      schema: { type: integer, example: 5}
+    Sort:
+      description: sorting based on query execution time
+      name: sort
+      schema: { type: string, enum: [ "asc","desc" ], default: "desc",  example: "desc"}
+      in: query
+      required: false
+    TodoId:
+      description: todo id
+      name: id
+      schema: { type: integer, default: 1,  example: 1}
+      in: path
+      required: true
+
+  schemas:
+    Query:
+      type: object
+      properties:
+        id: { type: integer }
+        statement: { type: string }
+        max_exec_time: { type: number }
+        mean_exec_time: { type: number }
+    Task:
+      type: object
+      properties:
+        id: { type: integer }
+        title: { type: string }
+    Error:
+      type: object
+      required: [ code, message ]
+      properties:
+        message: { type: string }
+        code: { type: integer }
+
+
+  responses:
+
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            message: "unsupported sort parameter"
+            code: 400
+    InternalServerError:
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            message: "something went wrong"
+            code: 500
