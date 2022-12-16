@@ -64,11 +64,11 @@ List of relations
 ### Implementation Notes
 
 - Directory structure following [standard go project layout](https://github.com/golang-standards/project-layout)
-- For keeping `main.go` file clean and readable used [fx](https://github.com/uber-go/fx) dependencies injection app
+- For keeping `main.go` file clean and readable used [fx](https://github.com/uber-go/fx) dependencies injection lib
 - For generating mocks used [moq](https://github.com/matryer/moq)
 - For making migrations clean and separately used [goose](https://github.com/pressly/goose)
-- As logger used famous [zap](https://github.com/uber-go/zap)
-- As ORM used [gorm](https://github.com/go-gorm/gorm)
+- As logger used famous [zap](https://github.com/uber-go/zap) 
+- As ORM used [gorm](https://github.com/go-gorm/gorm) 
 - As http web framework used [fiber](https://github.com/gofiber/fiber)
 - For caching used Redis and [redis go client](https://github.com/go-redis/redis)
 
