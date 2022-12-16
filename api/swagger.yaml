@@ -43,7 +43,7 @@ paths:
                       max_exec_time: 1s
                       mean_exec_time: 789ms
         400: { $ref: '#/components/responses/BadRequest' }
-        500: { $ref: '#/components/responses/InternalServerError'}
+        500: { $ref: '#/components/responses/InternalServerError' }
   /todos:
     post:
       tags:
@@ -53,7 +53,7 @@ paths:
         '201':
           description: todo item created
         400: { $ref: '#/components/responses/BadRequest' }
-        500: { $ref: '#/components/responses/InternalServerError'}
+        500: { $ref: '#/components/responses/InternalServerError' }
       requestBody:
         content:
           application/json:
@@ -67,7 +67,7 @@ paths:
         '201':
           description: todo item updated
         400: { $ref: '#/components/responses/BadRequest' }
-        500: { $ref: '#/components/responses/InternalServerError'}
+        500: { $ref: '#/components/responses/InternalServerError' }
       requestBody:
         content:
           application/json:
@@ -93,7 +93,7 @@ paths:
                   id: 1
                   title: "first task"
         400: { $ref: '#/components/responses/BadRequest' }
-        500: { $ref: '#/components/responses/InternalServerError'}
+        500: { $ref: '#/components/responses/InternalServerError' }
     delete:
       tags:
         - todo
@@ -105,7 +105,7 @@ paths:
           description: todo item deleted
 
         400: { $ref: '#/components/responses/BadRequest' }
-        500: { $ref: '#/components/responses/InternalServerError'}
+        500: { $ref: '#/components/responses/InternalServerError' }
 
 
 components:
@@ -115,29 +115,29 @@ components:
       name: type
       in: query
       required: false
-      schema: { type: string, enum: [ "select","update","insert","delete" ], example: "select"}
+      schema: { type: string, enum: [ "select","update","insert","delete" ], example: "select" }
     PerPage:
       description: record size per page
       name: per_page
       in: query
       required: false
-      schema: { type: integer, example: 10}
+      schema: { type: integer, example: 10 }
     PageNumber:
       description: requested page number
       name: page
       in: query
       required: false
-      schema: { type: integer, example: 5}
+      schema: { type: integer, example: 5 }
     Sort:
       description: sorting based on query execution time
       name: sort
-      schema: { type: string, enum: [ "asc","desc" ], default: "desc",  example: "desc"}
+      schema: { type: string, enum: [ "asc","desc" ], default: "desc",  example: "desc" }
       in: query
       required: false
     TodoId:
       description: todo id
       name: id
-      schema: { type: integer, default: 1,  example: 1}
+      schema: { type: integer, default: 1,  example: 1 }
       in: path
       required: true
 
