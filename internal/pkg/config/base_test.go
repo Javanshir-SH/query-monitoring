@@ -24,7 +24,7 @@ func TestTodoHandler_Create(t *testing.T) {
 		{
 			name:          "default value if no value",
 			key:           "DB_HOST",
-			expectedValue: "localhost",
+			expectedValue: "postgres",
 		},
 	}
 	for _, tt := range tests {

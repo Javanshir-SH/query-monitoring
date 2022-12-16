@@ -17,7 +17,7 @@ func NewConfig() *Config {
 	viper.SetDefault("DB_HOST", "postgres")
 	viper.SetDefault("DB_PORT", "5432")
 	viper.SetDefault("DB_USER", "postgres")
-	viper.SetDefault("DB_PASSWORD", "12345")
+	viper.SetDefault("DB_PASSWORD", "mysecretpassword")
 	viper.SetDefault("DB_NAME", "postgres")
 
 	// redis

@@ -2,10 +2,10 @@
 
 ---
 Service providing API layer which works according postgres `pg_stat_statements` extension and provides queries monitor API based on their execution time.  
-Using service provided API you can filter queries by statements (`select`, `insert`, `update`, `delete`) and sort by execution time (`asc`, `desc`).
-API specification can be found in `api/swagger.yaml`
+You can filter queries by statements (`select`, `insert`, `update`, `delete`) and sort by execution time (`asc`, `desc`) via service provided API .
+API specification can be found in the `api/swagger.yaml`
 
-> Expect a high load of API calls additionally implemented cache layer. The cache expiration time is configured from the
+> I implemented a cashing layer as a protective measure in case of high load. The cache expiration time is configured from the
 > configuration, which gets the value from `CACHE_EXPIRATION` environment variable.
 
 
@@ -24,13 +24,13 @@ which makes CRUD dummy queries in the database so that the DB Query API has some
 
 ---
 ```dotenv
-DB_HOST=localhost
+DB_HOST=postgres
 DB_NAME=postgres
 DB_PASSWORD=12345
 DB_PORT=5432
 DB_USER=postgres
 SERVICE_PORT=8080
-REDIS_HOST=localhost
+REDIS_HOST=redis
 REDIS_PORT=6379
 REDIS_DB=0
 CACHE_EXPIRATION=20
@@ -41,7 +41,20 @@ CACHE_EXPIRATION=20
 ---
 `docker-compose up`
 
-Docker compose runs Postgres Redis and application containers
+Docker compose runs Postgres Redis and app container.
+
+I have implemented migrations as an admin processes so, it runs on startup of the application. After successfull migration we should have following tables in database.
+
+`postgres=# \d`
+List of relations
+
+| Schema  |          Name           |   Type   |  Owner   |
+|---------|-------------------------|----------|----------|
+| public  | goose_db_version        | table    | postgres |
+| public  | goose_db_version_id_seq | sequence | postgres |
+| public  | pg_stat_statements      | view     | postgres |
+|  public | todos                   | table    | postgres |
+
 ### Test
 
 ---

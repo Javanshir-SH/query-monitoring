@@ -43,6 +43,7 @@ USER appuser
 COPY --from=builder /query-monitoring /app/query-monitoring
 COPY --from=builder /opt/migrate.sh /app/migrate.sh
 COPY --from=builder /go/bin/goose /app/goose
+COPY --from=builder /app/internal/migrations /app/migrations
 
 EXPOSE 8080
 

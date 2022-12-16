@@ -8,7 +8,7 @@ echo "migrate the database at startup of app"
 #    sleep 3
 # done
 
-cd /app/internal/migrations/
+cd /app/migrations/
 
-/app/goose postgres "host=postgres user=postgres password=123456 dbname=postgres sslmode=disable" up
+/app/goose postgres "host=postgres user=postgres password=mysecretpassword dbname=postgres sslmode=disable" up
 exec "$@"
